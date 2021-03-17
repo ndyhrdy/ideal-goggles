@@ -2,6 +2,7 @@ import axios from "axios";
 import { FC, useCallback, useEffect, useRef, useState } from "react";
 import { searchUniversities } from "../lib/api";
 import { University } from "../@types";
+import Alert from "./Alert";
 
 type Props = {
   searchTerm?: string;
@@ -41,6 +42,9 @@ const UniversitiesList: FC<Props> = ({ searchTerm }) => {
   return (
     <section>
       <div className="container mx-auto py-16 px-4">
+        {status === "fetching" && <Alert>Getting universities...</Alert>}
+        {!!error && <Alert>{error}</Alert>}
+
         <ul className="flex flex-wrap -mx-2 items-stretch">
           {universities.map((university) =>
             university.web_pages?.length > 0 ? (
