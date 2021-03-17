@@ -1,47 +1,14 @@
-import axios from "axios";
-import { FC, useCallback, useEffect, useRef, useState } from "react";
-import { searchUniversities } from "../lib/api";
+import { FC } from "react";
 import { University } from "../@types";
+import { useUniversities } from "./UniversitiesContext";
 import Alert from "./Alert";
 
-type Props = {
-  searchTerm?: string;
-};
-
-const UniversitiesList: FC<Props> = ({ searchTerm }) => {
-  const [error, setError] = useState(null);
-  const [status, setStatus] = useState<"idle" | "fetching">("idle");
-  const [universities, setUniversities] = useState<University[]>([]);
-  const fetchCancelToken = useRef(axios.CancelToken.source());
-
-  const handleFetch = useCallback(async () => {
-    setError(null);
-    setStatus("fetching");
-    try {
-      setUniversities(
-        await searchUniversities(
-          { country: searchTerm ? null : "Indonesia", name: searchTerm },
-          fetchCancelToken.current
-        )
-      );
-    } catch (error) {
-      if (!axios.isCancel(error)) {
-        setError(error.response?.data.message || error.message || error);
-      }
-    }
-    setStatus("idle");
-  }, [searchTerm, fetchCancelToken]);
-
-  useEffect(() => {
-    handleFetch();
-    return () => {
-      fetchCancelToken.current?.cancel("Request canceled");
-    };
-  }, [handleFetch]);
+const UniversitiesList: FC = () => {
+  const { error, universities, status } = useUniversities();
 
   return (
     <section>
-      <div className="container mx-auto py-16 px-4">
+      <div className="container mx-auto pt-16 pb-16 px-4">
         {status === "fetching" && <Alert>Getting universities...</Alert>}
         {!!error && <Alert>{error}</Alert>}
 
@@ -70,7 +37,7 @@ const ListItem: FC<ListItemProps> = ({ item }) => {
         className="flex flex-col justify-between h-40 bg-white rounded-lg shadow-lg transition-shadow hover:shadow focus:ring-2 ring-primary-500 duration-200 group"
       >
         <div className="p-4">
-          <h3 className="font-bold leading-tight tracking-tight group-hover:text-primary-600 transition-colors duration-200">
+          <h3 className="font-bold leading-tight tracking-tight group-hover:text-primary-500 transition-colors duration-200">
             {item.name}
           </h3>
           <p className="text-gray-400">{item.country}</p>

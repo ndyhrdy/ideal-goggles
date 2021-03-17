@@ -1,21 +1,22 @@
 import { FC } from "react";
-import { useRouter } from "next/router";
 import DefaultView from "../components/DefaultView";
 import Head from "../components/Head";
+import UniversitiesContextProvider from "../components/UniversitiesContext";
 import UniversitiesList from "../components/UniversitiesList";
+import UniversitiesSearch from "../components/UniversitiesSearch";
 
 const Home: FC = () => {
-  const router = useRouter();
-  const query = router.query;
-
   return (
     <DefaultView>
-      <Head title="Home" />
-      <UniversitiesList
-        searchTerm={
-          typeof query._q === "string" ? query._q : query._q?.[0] || undefined
-        }
-      />
+      <UniversitiesContextProvider>
+        <Head title="Home" />
+        <section className="bg-white py-24">
+          <div className="container mx-auto px-4 flex flex-col items-center">
+            <UniversitiesSearch />
+          </div>
+        </section>
+        <UniversitiesList />
+      </UniversitiesContextProvider>
     </DefaultView>
   );
 };
