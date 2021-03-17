@@ -14,6 +14,7 @@ import { University } from "../@types";
 type Status = "pending" | "idle" | "fetching";
 
 type Values = {
+  currentLocation: null | string;
   error: any;
   searchTerm: string;
   setSearchTerm: (term: string) => void;
@@ -22,6 +23,7 @@ type Values = {
 };
 
 const Context = createContext<Values>({
+  currentLocation: null,
   error: null,
   searchTerm: "",
   setSearchTerm: () => {},
@@ -32,6 +34,7 @@ const Context = createContext<Values>({
 const UniversitiesContextProvider: FC = ({ children }) => {
   const router = useRouter();
   const query = router.query;
+  const [currentLocation, setCurrentLocation] = useState<string>(null);
   const [error, setError] = useState(null);
   const [searchTerm, setSearchTerm] = useState<string>("");
   const [status, setStatus] = useState<Status>("pending");
@@ -41,10 +44,17 @@ const UniversitiesContextProvider: FC = ({ children }) => {
     async (cancelToken: CancelTokenSource) => {
       setError(null);
       setStatus("fetching");
+      const searchingByName = !!searchTerm.trim().length;
       try {
         setUniversities(
           await searchUniversities(
-            { country: searchTerm ? null : "Indonesia", name: searchTerm },
+            searchingByName
+              ? {
+                  name: searchTerm,
+                }
+              : {
+                  country: currentLocation || "Indonesia",
+                },
             cancelToken
           )
         );
@@ -55,16 +65,8 @@ const UniversitiesContextProvider: FC = ({ children }) => {
       }
       setStatus("idle");
     },
-    [searchTerm]
+    [searchTerm, currentLocation]
   );
-
-  useEffect(() => {
-    const fetchCancelToken = axios.CancelToken.source();
-    handleFetch(fetchCancelToken);
-    return () => {
-      fetchCancelToken.cancel("Request canceled");
-    };
-  }, [handleFetch]);
 
   useEffect(() => {
     if (query._q) {
@@ -75,9 +77,36 @@ const UniversitiesContextProvider: FC = ({ children }) => {
     setStatus("idle");
   }, [query._q]);
 
+  useEffect(() => {
+    const fetchCancelToken = axios.CancelToken.source();
+    handleFetch(fetchCancelToken);
+    return () => {
+      fetchCancelToken.cancel("Request canceled");
+    };
+  }, [handleFetch]);
+
+  useEffect(() => {
+    const reverseGeocode: PositionCallback = async ({ coords }) => {
+      const { data: geocodedResult } = await axios.get<{ countryName: string }>(
+        "https://api.bigdatacloud.net/data/reverse-geocode-client",
+        {
+          params: {
+            latitude: coords.latitude,
+            longitude: coords.longitude,
+          },
+        }
+      );
+      setCurrentLocation(geocodedResult.countryName);
+    };
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(reverseGeocode);
+    }
+  }, []);
+
   return (
     <Context.Provider
       value={{
+        currentLocation,
         error,
         searchTerm,
         setSearchTerm,
