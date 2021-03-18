@@ -17,7 +17,7 @@ const UniversitiesSearch: FC = () => {
     <form
       action="/"
       method="get"
-      className="w-full max-w-2xl"
+      className="w-full max-w-3xl"
       onSubmit={(e) => {
         e.preventDefault();
         router.push(term.trim().length ? `?_q=${term}` : "/", undefined, {
