@@ -33,7 +33,7 @@ const UniversitiesSearch: FC = () => {
           onChange={(e) => {
             setTerm(e.target.value);
           }}
-          className="text-2xl pl-5 pr-16 h-14 rounded-md w-full bg-white bg-opacity-80 shadow-lg focus:ring-2 ring-primary-500 focus:bg-opacity-100 transition-colors duration-200 font-light"
+          className="text-2xl pl-5 pr-16 h-14 rounded-md w-full bg-gray-50 shadow-lg focus:ring-2 ring-primary-500 focus:bg-white transition-colors duration-200 font-light"
           placeholder="Find your university here..."
         />
         {searchTerm.trim().length ? (
@@ -51,11 +51,14 @@ const UniversitiesSearch: FC = () => {
           </div>
         )}
       </div>
-      {!!currentLocation && !searchTerm.trim().length && (
-        <div className="mt-4 text-sm text-gray-400">
-          <MapPin strokeWidth={2} size={16} /> {currentLocation}
-        </div>
-      )}
+      <div className="mt-4 text-sm text-gray-400 space-x-4">
+        {!!currentLocation && !searchTerm.trim().length && (
+          <span>
+            <MapPin strokeWidth={2} size={16} /> {currentLocation}
+          </span>
+        )}
+        {term !== searchTerm && <span>Press [Enter] to search</span>}
+      </div>
     </form>
   );
 };
