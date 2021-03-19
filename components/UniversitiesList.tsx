@@ -34,10 +34,10 @@ const ListItem: FC<ListItemProps> = ({ item }) => {
       <a
         href={item.web_pages[0]}
         target="_blank"
-        className="flex flex-col justify-between h-40 bg-white rounded-lg shadow-lg transition-shadow hover:shadow focus:ring-2 ring-primary-500 duration-200 group"
+        className="flex flex-col justify-between h-40 bg-white dark:bg-gray-800 rounded-lg shadow-lg transition-shadow hover:shadow focus:ring-2 ring-primary-500 duration-200 group"
       >
         <div className="p-4">
-          <h3 className="font-bold leading-tight tracking-tight group-hover:text-primary-500 transition-colors duration-200">
+          <h3 className="font-bold leading-tight tracking-tight dark:text-white group-hover:text-primary-500 transition-colors duration-200">
             {item.name}
           </h3>
           <p className="text-gray-400">{item.country}</p>

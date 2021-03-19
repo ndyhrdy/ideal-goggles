@@ -1,6 +1,6 @@
 import { AnimatePresence, motion } from "framer-motion";
 import { FC, useMemo, useState } from "react";
-import { Menu } from "@styled-icons/feather";
+import { Github, Menu } from "@styled-icons/feather";
 import { useRouter } from "next/router";
 import Link from "next/link";
 
@@ -34,7 +34,7 @@ const Navbar: FC<Props> = ({ fixed }) => {
           !fixed ? "lg:h-24" : ""
         }`}
       >
-        <div className="h-full w-full flex items-center justify-between lg:justify-start">
+        <div className="h-full w-full flex items-center justify-start">
           <Link href="/">
             <a className="text-2xl font-black tracking-tight text-primary-500 hover:text-primary-400 transition-colors duration-100">
               Univerxities
@@ -47,8 +47,8 @@ const Navbar: FC<Props> = ({ fixed }) => {
                   <a
                     className={`flex h-full items-center px-4 border-b-4 pt-1 transition-colors duration-100 ${
                       link.active
-                        ? "text-primary-600 border-primary-500 hover:bg-primary-50"
-                        : "text-gray-400 border-transparent hover:bg-gray-100 hover:text-gray-500 "
+                        ? "text-primary-600 border-primary-500"
+                        : "text-gray-400 border-transparent hover:text-gray-500 dark:hover:text-white"
                     }`}
                   >
                     {link.label}
@@ -57,18 +57,24 @@ const Navbar: FC<Props> = ({ fixed }) => {
               </li>
             ))}
           </ul>
-          {!showMenu && (
-            <button
-              type="button"
-              className="h-full px-4 -mr-4 lg:hidden"
-              onClick={() => {
-                setShowMenu(true);
-              }}
-            >
-              <Menu strokeWidth={2} size={24} />
-            </button>
-          )}
         </div>
+        <a
+          href="https://github.com/ndyhrdy/ideal-goggles"
+          className="flex items-center justify-center h-12 w-12 rounded-full hover:bg-gray-100 dark:hover:bg-gray-900 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300"
+        >
+          <Github strokeWidth={2} size={24} />
+        </a>
+        {!showMenu && (
+          <button
+            type="button"
+            className="h-full px-4 -mr-4 lg:hidden dark:text-gray-300"
+            onClick={() => {
+              setShowMenu(true);
+            }}
+          >
+            <Menu strokeWidth={2} size={24} />
+          </button>
+        )}
       </div>
 
       <AnimatePresence>
@@ -95,7 +101,7 @@ const Navbar: FC<Props> = ({ fixed }) => {
           >
             <motion.div
               key="container"
-              className="w-80 max-w-full bg-white h-full py-24"
+              className="w-80 max-w-full bg-white dark:bg-gray-900 h-full py-24"
               variants={{
                 out: {
                   x: -320,

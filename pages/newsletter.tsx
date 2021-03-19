@@ -35,8 +35,10 @@ const Newsletter: FC = () => {
 
       <section>
         <div className="w-full max-w-xl mx-auto px-4 py-32">
-          <h1 className="text-5xl text-primary-500 mb-4">Keep up to date.</h1>
-          <p className="mb-8">
+          <h1 className="text-5xl text-primary-500 dark:text-primary-400 mb-4">
+            Keep up to date.
+          </h1>
+          <p className="mb-8 dark:text-gray-300">
             Subscribe to our newsletter for weekly university updates!
           </p>
           {!!error && <Alert type="danger">{error}</Alert>}
@@ -58,7 +60,7 @@ const Newsletter: FC = () => {
                     setEmail(e.target.value);
                   }}
                   disabled={status !== "idle"}
-                  className="w-full px-4 h-12 bg-white text-lg focus:border-primary-500"
+                  className="w-full px-4 h-12 bg-white dark:bg-gray-800 text-lg dark:text-white"
                   placeholder="Enter your email address here..."
                 />
                 <button

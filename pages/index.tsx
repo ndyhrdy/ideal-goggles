@@ -9,7 +9,7 @@ const Home: FC = () => {
     <>
       <UniversitiesContextProvider>
         <Head title="Home" />
-        <section className="bg-white py-8 lg:py-24">
+        <section className="bg-white dark:bg-gray-800 py-8 lg:py-24">
           <div className="container mx-auto px-4 flex flex-col items-center">
             <UniversitiesSearch />
           </div>

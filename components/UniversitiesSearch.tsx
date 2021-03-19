@@ -33,7 +33,7 @@ const UniversitiesSearch: FC = () => {
           onChange={(e) => {
             setTerm(e.target.value);
           }}
-          className="text-2xl pl-5 pr-16 h-14 rounded-md w-full bg-gray-50 shadow-lg focus:ring-2 ring-primary-500 focus:bg-white transition-colors duration-200 font-light"
+          className="text-2xl pl-5 pr-16 h-14 rounded-md w-full dark:text-white bg-gray-50 dark:bg-gray-700 shadow-lg focus:ring-2 ring-primary-500 focus:bg-white dark:focus:bg-gray-900 transition-colors duration-200 font-light"
           placeholder="Find your university here..."
         />
         {searchTerm.trim().length ? (
