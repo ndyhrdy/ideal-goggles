@@ -1,8 +1,9 @@
 import { AnimatePresence, motion } from "framer-motion";
 import { FC, useMemo, useState } from "react";
-import { Github, Menu } from "@styled-icons/feather";
+import { Github, Menu, Moon, Sun } from "@styled-icons/feather";
 import { useRouter } from "next/router";
 import Link from "next/link";
+import { useApp } from "./AppContext";
 
 type Props = {
   fixed: boolean;
@@ -57,6 +58,9 @@ const Navbar: FC<Props> = ({ fixed }) => {
               </li>
             ))}
           </ul>
+        </div>
+        <div className="mr-4">
+          <DarkSwitcher />
         </div>
         <a
           href="https://github.com/ndyhrdy/ideal-goggles"
@@ -140,6 +144,34 @@ const Navbar: FC<Props> = ({ fixed }) => {
         )}
       </AnimatePresence>
     </nav>
+  );
+};
+
+const DarkSwitcher: FC = () => {
+  const { dark, setDark } = useApp();
+
+  return (
+    <div className="flex items-center text-gray-400 group">
+      <Sun
+        strokeWidth={2}
+        size={20}
+        className={!dark ? "text-yellow-500" : ""}
+      />
+      <button
+        type="button"
+        onClick={() => {
+          setDark(!dark);
+        }}
+        className="border-2 border-gray-400 hover:border-gray-600 dark:hover:border-gray-300 w-10 h-6 rounded-full flex items-center justify-center mx-2 group"
+      >
+        <span
+          className={`h-4 w-4 rounded-full bg-gray-400 group-hover:bg-gray-600 dark:group-hover:bg-gray-300 transition-transform duration-200 transform ${
+            dark ? "translate-x-2" : "-translate-x-2"
+          }`}
+        ></span>
+      </button>
+      <Moon strokeWidth={2} size={20} className={dark ? "text-white" : ""} />
+    </div>
   );
 };
 
