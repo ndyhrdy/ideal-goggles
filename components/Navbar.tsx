@@ -1,8 +1,8 @@
+import { AnimatePresence, motion } from "framer-motion";
 import { FC, useMemo, useState } from "react";
+import { Menu } from "@styled-icons/feather";
 import { useRouter } from "next/router";
 import Link from "next/link";
-import { Menu } from "@styled-icons/feather";
-import { AnimatePresence, motion } from "framer-motion";
 
 type Props = {
   fixed: boolean;
