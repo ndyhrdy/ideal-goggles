@@ -3,6 +3,8 @@ import { useRouter } from "next/router";
 import axios, { CancelTokenSource } from "axios";
 import { registerUser } from "../lib/api";
 import Alert from "../components/Alert";
+import FormField from "../components/FormField";
+import FormInput from "../components/FormInput";
 import Head from "../components/Head";
 
 const Register: FC = () => {
@@ -65,81 +67,52 @@ const Register: FC = () => {
               handleSubmit();
             }}
           >
-            <div className="mb-4 px-8 flex flex-col">
-              <label
-                htmlFor="email"
-                className="text-gray-400 dark:text-gray-500 mb-1"
-              >
-                Email Address
-              </label>
-              <input
-                autoFocus
-                type="email"
-                name="email"
-                disabled={status !== "idle"}
-                className="border rounded-md px-2 h-10 dark:border-gray-700 focus:border-primary-500 dark:focus:border-primary-500 bg-white dark:bg-gray-800 dark:text-white"
-                value={data.email}
-                onChange={(e) => {
-                  setData({ ...data, email: e.target.value });
-                }}
-              />
-            </div>
-
-            <div className="mb-4 px-8 flex flex-col">
-              <label
-                htmlFor="fullName"
-                className="text-gray-400 dark:text-gray-500 mb-1"
-              >
-                Full Name
-              </label>
-              <input
-                type="text"
-                name="fullName"
-                disabled={status !== "idle"}
-                className="border rounded-md px-2 h-10 dark:border-gray-700 focus:border-primary-500 dark:focus:border-primary-500 bg-white dark:bg-gray-800 dark:text-white"
-                value={data.fullName}
-                onChange={(e) => {
-                  setData({ ...data, fullName: e.target.value });
-                }}
-              />
-            </div>
-
-            <div className="mb-4 px-8 flex flex-col">
-              <label
-                htmlFor="password"
-                className="text-gray-400 dark:text-gray-500 mb-1"
-              >
-                Password
-              </label>
-              <input
-                type="password"
-                name="password"
-                disabled={status !== "idle"}
-                className="border rounded-md px-2 h-10 dark:border-gray-700 focus:border-primary-500 dark:focus:border-primary-500 bg-white dark:bg-gray-800 dark:text-white"
-                value={data.password}
-                onChange={(e) => {
-                  setData({ ...data, password: e.target.value });
-                }}
-              />
-            </div>
-
-            <div className="mb-8 px-8 flex flex-col">
-              <label
-                htmlFor="confirmPassword"
-                className="text-gray-400 dark:text-gray-500 mb-1"
-              >
-                Confirm Password
-              </label>
-              <input
-                type="password"
-                name="confirmPassword"
-                disabled={status !== "idle"}
-                className="border rounded-md px-2 h-10 dark:border-gray-700 focus:border-primary-500 dark:focus:border-primary-500 bg-white dark:bg-gray-800 dark:text-white"
-                value={data.confirmPassword}
-                onChange={(e) => {
-                  setData({ ...data, confirmPassword: e.target.value });
-                }}
-              />
+            <div className="mb-8">
+              <FormField label="Email Address">
+                <FormInput
+                  autoFocus
+                  type="email"
+                  name="email"
+                  disabled={status !== "idle"}
+                  value={data.email}
+                  onChangeText={(email) => {
+                    setData({ ...data, email });
+                  }}
+                />
+              </FormField>
+              <FormField label="Full Name">
+                <FormInput
+                  type="text"
+                  name="fullName"
+                  disabled={status !== "idle"}
+                  value={data.fullName}
+                  onChangeText={(fullName) => {
+                    setData({ ...data, fullName });
+                  }}
+                />
+              </FormField>
+              <FormField label="Password">
+                <FormInput
+                  type="password"
+                  name="password"
+                  disabled={status !== "idle"}
+                  value={data.password}
+                  onChangeText={(password) => {
+                    setData({ ...data, password });
+                  }}
+                />
+              </FormField>
+              <FormField label="Confirm Password">
+                <FormInput
+                  type="password"
+                  name="confirmPassword"
+                  disabled={status !== "idle"}
+                  value={data.confirmPassword}
+                  onChangeText={(confirmPassword) => {
+                    setData({ ...data, confirmPassword });
+                  }}
+                />
+              </FormField>
             </div>
 
             <div className="px-8">
