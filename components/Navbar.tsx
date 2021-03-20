@@ -59,26 +59,27 @@ const Navbar: FC<Props> = ({ fixed }) => {
             ))}
           </ul>
         </div>
-        <div className="mr-4">
+        <div className="flex items-center justify-end space-x-4">
           <DarkSwitcher />
-        </div>
-        <a
-          href="https://github.com/ndyhrdy/ideal-goggles"
-          className="flex items-center justify-center h-12 w-12 rounded-full hover:bg-gray-100 dark:hover:bg-gray-900 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300"
-        >
-          <Github strokeWidth={2} size={24} />
-        </a>
-        {!showMenu && (
-          <button
-            type="button"
-            className="h-full px-4 -mr-4 lg:hidden dark:text-gray-300"
-            onClick={() => {
-              setShowMenu(true);
-            }}
+          <a
+            href="https://github.com/ndyhrdy/ideal-goggles"
+            className="flex items-center justify-center h-12 w-12 rounded-full hover:bg-gray-100 dark:hover:bg-gray-900 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300"
           >
-            <Menu strokeWidth={2} size={24} />
-          </button>
-        )}
+            <Github strokeWidth={2} size={24} />
+          </a>
+          <AccountMenu />
+          {!showMenu && (
+            <button
+              type="button"
+              className="h-full -mr-4 lg:hidden dark:text-gray-300"
+              onClick={() => {
+                setShowMenu(true);
+              }}
+            >
+              <Menu strokeWidth={2} size={24} />
+            </button>
+          )}
+        </div>
       </div>
 
       <AnimatePresence>
@@ -138,6 +139,8 @@ const Navbar: FC<Props> = ({ fixed }) => {
                     </li>
                   );
                 })}
+                <li className="border-t my-4 dark:border-gray-700"></li>
+                <AccountMenu sidebar />
               </ul>
             </motion.div>
           </motion.div>
@@ -152,11 +155,13 @@ const DarkSwitcher: FC = () => {
 
   return (
     <div className="flex items-center text-gray-400 group">
-      <Sun
-        strokeWidth={2}
-        size={20}
-        className={!dark ? "text-yellow-500" : ""}
-      />
+      <span className="hidden lg:flex">
+        <Sun
+          strokeWidth={2}
+          size={20}
+          className={!dark ? "text-yellow-500" : ""}
+        />
+      </span>
       <button
         type="button"
         onClick={() => {
@@ -172,6 +177,49 @@ const DarkSwitcher: FC = () => {
       </button>
       <Moon strokeWidth={2} size={20} className={dark ? "text-white" : ""} />
     </div>
+  );
+};
+
+const AccountMenu: FC<{ sidebar?: boolean }> = ({ sidebar = false }) => {
+  const router = useRouter();
+
+  if (sidebar) {
+    return (
+      <>
+        <li className="flex items-center px-6 space-x-4">
+          <Link href="/login">
+            <a className="block py-2 text-xl tracking-tight text-gray-400">
+              Log In
+            </a>
+          </Link>
+          <span className="text-gray-300 dark:text-gray-500">/</span>
+          <Link href="/register">
+            <a className="block py-2 text-xl tracking-tight text-gray-400">
+              Sign Up
+            </a>
+          </Link>
+        </li>
+      </>
+    );
+  }
+
+  return (
+    <>
+      {router.pathname !== "/login" && (
+        <Link href="/login">
+          <a className="hidden lg:flex text-gray-400 dark:hover:text-white hover:text-gray-600 whitespace-nowrap">
+            Log In
+          </a>
+        </Link>
+      )}
+      {router.pathname !== "/register" && (
+        <Link href="/register">
+          <a className="hidden lg:flex bg-primary-500 hover:bg-primary-600 focus:bg-primary-600 text-white px-4 items-center h-10 rounded-md whitespace-nowrap shadow">
+            Sign Up
+          </a>
+        </Link>
+      )}
+    </>
   );
 };
 

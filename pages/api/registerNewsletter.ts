@@ -3,7 +3,7 @@
 import { NextApiHandler } from "next";
 import fs from "fs";
 
-const databaseFilename = process.env.DATABASE_FILENAME;
+const databaseFilename = process.env.NEWSLETTER_DATABASE_FILENAME;
 
 const addUserToSubscribersList = (email: string): void => {
   let jsonContent = "[]";
