@@ -2,6 +2,7 @@
 
 import { NextApiHandler } from "next";
 import fs from "fs";
+import { validateEmail, validateRequired } from "../../lib/helpers";
 
 const databaseFilename = process.env.NEWSLETTER_DATABASE_FILENAME;
 
@@ -10,7 +11,9 @@ const addUserToSubscribersList = (email: string): void => {
   try {
     jsonContent = fs.readFileSync(databaseFilename, { encoding: "utf-8" });
   } catch (error) {
-    console.log("Database does not exist yet. Creating users.json file.");
+    console.log(
+      `Database does not exist yet. Creating ${databaseFilename} file.`
+    );
   }
   let usersList: string[] = JSON.parse(jsonContent);
   if (!usersList.find((user) => user === email)) {
@@ -26,19 +29,11 @@ const handler: NextApiHandler = async (req, res) => {
     res.status(404);
     return;
   }
-  if (
-    !req.body.email ||
-    typeof req.body.email !== "string" ||
-    !req.body.email.trim().length
-  ) {
+  if (!validateRequired(req.body.email)) {
     res.status(400).json({ message: "Email address is required." });
     return;
   }
-  if (
-    !req.body.email.match(
-      /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-    ).length
-  ) {
+  if (!validateEmail(req.body.email)) {
     res.status(400).json({ message: "Email address is not valid." });
     return;
   }

@@ -6,3 +6,12 @@ export type University = {
   name: string;
   web_pages?: string[];
 };
+
+export type User = {
+  email: string;
+  fullName: string;
+};
+
+export type BackendUser = User & {
+  password: string;
+};
