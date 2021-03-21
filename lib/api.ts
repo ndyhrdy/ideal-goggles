@@ -1,5 +1,5 @@
 import axios, { CancelTokenSource } from "axios";
-import { University } from "../@types";
+import { AuthenticatedUser, University, User } from "../@types";
 
 const universitiesApi = axios.create({
   baseURL: process.env.NEXT_PUBLIC_API_BASE_URL,
@@ -39,4 +39,30 @@ export const registerUser = async (
     cancelToken: cancelTokenSource.token,
   });
   return Promise.resolve();
+};
+
+type AuthenticateData = {
+  email: string;
+  password: string;
+};
+
+export const authenticate = async (
+  data: AuthenticateData,
+  cancelTokenSource: CancelTokenSource
+): Promise<AuthenticatedUser> => {
+  const { data: user } = await axios.post<AuthenticatedUser>(
+    "/api/auth",
+    data,
+    { cancelToken: cancelTokenSource.token }
+  );
+  return Promise.resolve(user);
+};
+
+export const me = async (token: string): Promise<User> => {
+  const { data: user } = await axios.get<User>("/api/me", {
+    headers: {
+      Authorization: token,
+    },
+  });
+  return Promise.resolve(user);
 };

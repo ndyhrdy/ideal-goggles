@@ -121,7 +121,7 @@ const Navbar: FC<Props> = ({ fixed }) => {
               animate="in"
               exit="out"
             >
-              <ul className="flex flex-col items-stretch">
+              <ul className="flex flex-col items-stretch border-b pb-4 mb-4 dark:border-gray-700">
                 {links.map((link) => {
                   return (
                     <li key={link.to}>
@@ -139,9 +139,10 @@ const Navbar: FC<Props> = ({ fixed }) => {
                     </li>
                   );
                 })}
-                <li className="border-t my-4 dark:border-gray-700"></li>
-                <AccountMenu sidebar />
               </ul>
+              <div className="px-6">
+                <AccountMenu sidebar />
+              </div>
             </motion.div>
           </motion.div>
         )}
@@ -182,24 +183,42 @@ const DarkSwitcher: FC = () => {
 
 const AccountMenu: FC<{ sidebar?: boolean }> = ({ sidebar = false }) => {
   const router = useRouter();
+  const { user, logout, loadingUser } = useApp();
+
+  if (loadingUser) {
+    return null;
+  }
+
+  if (user) {
+    return (
+      <button
+        type="button"
+        onClick={logout}
+        className="hidden lg:flex flex-col items-start text-left text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 group leading-tight whitespace-nowrap"
+      >
+        {user.fullName}
+        <div className="text-xs dark:text-gray-500 dark:group-hover:text-gray-300">
+          Click to log out
+        </div>
+      </button>
+    );
+  }
 
   if (sidebar) {
     return (
-      <>
-        <li className="flex items-center px-6 space-x-4">
-          <Link href="/login">
-            <a className="block py-2 text-xl tracking-tight text-gray-400">
-              Log In
-            </a>
-          </Link>
-          <span className="text-gray-300 dark:text-gray-500">/</span>
-          <Link href="/register">
-            <a className="block py-2 text-xl tracking-tight text-gray-400">
-              Sign Up
-            </a>
-          </Link>
-        </li>
-      </>
+      <div className="flex items-center space-x-4">
+        <Link href="/login">
+          <a className="block py-2 text-xl tracking-tight text-gray-400">
+            Log In
+          </a>
+        </Link>
+        <span className="text-gray-300 dark:text-gray-500">/</span>
+        <Link href="/register">
+          <a className="block py-2 text-xl tracking-tight text-gray-400">
+            Sign Up
+          </a>
+        </Link>
+      </div>
     );
   }
 

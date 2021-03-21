@@ -15,3 +15,12 @@ export type User = {
 export type BackendUser = User & {
   password: string;
 };
+
+export type AuthenticatedUser = User & {
+  token: string;
+};
+
+export type Session = {
+  email: string;
+  token: string;
+};
