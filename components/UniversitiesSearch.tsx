@@ -18,6 +18,7 @@ const UniversitiesSearch: FC = () => {
       action="/"
       method="get"
       className="w-full max-w-3xl"
+      id="universitySearchForm"
       onSubmit={(e) => {
         e.preventDefault();
         router.push(term.trim().length ? `?_q=${term}` : "/", undefined, {
@@ -28,7 +29,6 @@ const UniversitiesSearch: FC = () => {
       <div className="relative">
         <input
           type="text"
-          name="name"
           value={term}
           onChange={(e) => {
             setTerm(e.target.value);

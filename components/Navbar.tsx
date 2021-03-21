@@ -72,6 +72,7 @@ const Navbar: FC<Props> = ({ fixed }) => {
           <DarkSwitcher />
           <a
             href="https://github.com/ndyhrdy/ideal-goggles"
+            target="_blank"
             className="flex items-center justify-center h-12 w-12 rounded-full hover:bg-gray-100 dark:hover:bg-gray-900 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300"
           >
             <Github strokeWidth={2} size={24} />

@@ -11,7 +11,7 @@ const UniversitiesList: FC = () => {
   const { error, universities, status } = useUniversities();
 
   return (
-    <section>
+    <section id="universitiesList">
       <div className="container mx-auto pt-16 pb-16 px-4">
         {status === "fetching" && <Alert>Getting universities...</Alert>}
         {!!error && <Alert>{error}</Alert>}
