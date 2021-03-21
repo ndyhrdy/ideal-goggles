@@ -1,34 +1,68 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Univerxities
+
+A simple web app to search for universities around the world, using data provided by [Hipo University Domains and Names Data API](https://github.com/Hipo/university-domains-list).
+
+## Features
+
+- Universities list with search and favorites capability
+- Favorite universities list
+- Newsletter subscription form
+- Responsive design
+- Authentication and registration
+- Dark mode
+
+## Tech Stack
+
+Alongside the required technologies like React JS and Typescript, the app uses a few other libraries to support development.
+
+- [NextJS](https://nextjs.org/) - ReactJS-based SSR app framework
+- [TailwindCSS](https://tailwindcss.com/) - Utility-first CSS framework
+- [Axios](https://github.com/axios/axios) - HTTP client
+- [Framer Motion](https://www.framer.com/motion/) - ReactJS animation library
+- [Styled Icons](https://styled-icons.js.org/) - Icon library
+- [Bcrypt](https://github.com/kelektiv/node.bcrypt.js) - String hash library
+- [Cypress](https://www.cypress.io/) - E2E test runner
 
 ## Getting Started
 
-First, run the development server:
+### Requirements
 
-```bash
-npm run dev
-# or
-yarn dev
+Please make sure the following software are installed on your system.
+
+- NodeJS >= 10.13
+- Yarn 1.x
+- Git
+- Web Browser
+
+### Installation
+
+Firstly, clone this repo to your machine.
+
+```shell
+$ git clone https://github.com/ndyhrdy/ideal-goggles univerxities # using https
+$ git clone git@github.com:ndyhrdy/ideal-goggles.git univerxities # using ssh
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Change into the project directory and install dependencies.
 
-You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
+```shell
+$ cd univerxities
+$ yarn
+```
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.js`.
+The app can now be served locally using the `yarn dev` script. Then open a browser and navigate to `http://localhost:3000` to access the app.
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+```shell
+$ yarn dev
+```
 
-## Learn More
+## Running Tests
 
-To learn more about Next.js, take a look at the following resources:
+This app uses Cypress for testing. The Cypress UI can be started using the script `yarn cy`. But first make sure the NextJS dev server is running.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```shell
+$ yarn dev # if server is not running yet
+$ yarn cy
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+All integration tests are listed in the Cypress UI. Click on a single spec to run the tests defined in it, or click `Run x integration specs` to run all tests. Cypress will automatically open an installed browser in headless mode to begin testing.
