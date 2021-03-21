@@ -32,7 +32,7 @@ type ListItemProps = {
   item: University;
 };
 
-const ListItem: FC<ListItemProps> = ({ item }) => {
+export const ListItem: FC<ListItemProps> = ({ item }) => {
   const { user, setFavorites } = useApp();
   const [status, setStatus] = useState<"idle" | "busy">("idle");
 

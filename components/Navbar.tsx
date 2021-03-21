@@ -11,23 +11,27 @@ type Props = {
 
 const Navbar: FC<Props> = ({ fixed }) => {
   const router = useRouter();
+  const { user } = useApp();
   const [showMenu, setShowMenu] = useState(false);
 
   const links = useMemo(() => {
-    return [
+    const links = [
       { to: "/", label: "Search", active: router.pathname === "/" },
-      {
-        to: "/favorites",
-        label: "Favorites",
-        active: router.pathname === "/favorites",
-      },
       {
         to: "/newsletter",
         label: "Newsletter",
         active: router.pathname === "/newsletter",
       },
     ];
-  }, [router.pathname]);
+    if (user) {
+      links.splice(1, 0, {
+        to: "/favorites",
+        label: "Favorites",
+        active: router.pathname === "/favorites",
+      });
+    }
+    return links;
+  }, [user, router.pathname]);
 
   return (
     <nav
