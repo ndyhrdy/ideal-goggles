@@ -55,6 +55,7 @@ const Newsletter: FC = () => {
               <div className="flex shadow-lg rounded-md overflow-hidden mb-4">
                 <input
                   type="email"
+                  name="email"
                   value={email}
                   onChange={(e) => {
                     setEmail(e.target.value);

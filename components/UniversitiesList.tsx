@@ -72,11 +72,11 @@ export const ListItem: FC<ListItemProps> = ({ item }) => {
               type="button"
               disabled={status !== "idle"}
               onClick={handleFavorite}
-              className={
+              className={`fav-button ${
                 isFavorite
                   ? "text-red-500 hover:text-red-600"
                   : "text-gray-400 hover:text-gray-600 dark:hover:text-gray-300"
-              }
+              }`}
             >
               {isFavorite ? <HeartFull size={20} /> : <Heart size={20} />}
             </button>

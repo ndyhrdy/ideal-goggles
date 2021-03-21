@@ -19,7 +19,7 @@ const Favorites: FC = () => {
 
   return (
     <>
-      <section>
+      <section id="favoritesList">
         <div className="container mx-auto px-4 pt-16 pb-16">
           <h1 className="font-black tracking-tight text-3xl dark:text-white mb-8">
             Favorites
