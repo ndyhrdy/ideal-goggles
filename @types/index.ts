@@ -10,6 +10,7 @@ export type University = {
 export type User = {
   email: string;
   fullName: string;
+  favorites?: string[];
 };
 
 export type BackendUser = User & {

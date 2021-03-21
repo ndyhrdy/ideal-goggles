@@ -194,11 +194,13 @@ const AccountMenu: FC<{ sidebar?: boolean }> = ({ sidebar = false }) => {
       <button
         type="button"
         onClick={logout}
-        className="hidden lg:flex flex-col items-start text-left text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 group leading-tight whitespace-nowrap"
+        className={`${
+          sidebar ? "" : "hidden lg:flex"
+        } flex-col items-start text-left text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 group leading-tight whitespace-nowrap`}
       >
         {user.fullName}
         <div className="text-xs dark:text-gray-500 dark:group-hover:text-gray-300">
-          Click to log out
+          {sidebar ? "Tap here" : "Click"} to log out
         </div>
       </button>
     );
