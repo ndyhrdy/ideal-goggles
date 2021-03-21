@@ -52,6 +52,7 @@ const authenticate = async (
   return Promise.resolve({
     ...session,
     fullName: user.fullName,
+    favorites: user.favorites || [],
   });
 };
 

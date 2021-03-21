@@ -89,6 +89,7 @@ const AppContextProvider: FC = ({ children }) => {
             email: user.email,
             fullName: user.fullName,
             token: user.token,
+            favorites: user.favorites || [],
           });
           localStorage.setItem("authToken", user.token);
         },
