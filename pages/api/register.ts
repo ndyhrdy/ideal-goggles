@@ -73,8 +73,7 @@ const handler: NextApiHandler = async (req, res) => {
   try {
     await registerUser(req.body);
   } catch (error) {
-    console.log(error);
-    res.status(500);
+    res.status(500).json({ message: error.message });
     return;
   }
   res.status(200).json({ message: "You have successfully registered!" });
