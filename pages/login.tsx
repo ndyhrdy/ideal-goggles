@@ -31,7 +31,7 @@ const Login: FC = () => {
       const user = await authenticate(data, cancelTokenSource);
       login(user);
     } catch (error) {
-      setError(error);
+      setError(error.response?.data.message || error.message || error);
       setStatus("idle");
     }
   }, [status, data, login]);

@@ -42,7 +42,7 @@ const registerUser = async (data: RegisterUserData): Promise<BackendUser> => {
 
 const handler: NextApiHandler = async (req, res) => {
   if (req.method?.toLowerCase() !== "post") {
-    res.status(404);
+    res.status(404).json({ message: "Not Found" });
     return;
   }
   const errors = {};

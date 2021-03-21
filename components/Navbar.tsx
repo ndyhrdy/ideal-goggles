@@ -204,6 +204,7 @@ const AccountMenu: FC<{ sidebar?: boolean }> = ({ sidebar = false }) => {
       <button
         type="button"
         onClick={logout}
+        id="logoutButton"
         className={`${
           sidebar ? "" : "hidden lg:flex"
         } flex-col items-start text-left text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 group leading-tight whitespace-nowrap`}
