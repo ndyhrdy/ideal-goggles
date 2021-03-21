@@ -1,7 +1,7 @@
 import { NextApiHandler } from "next";
 import fs from "fs";
 import { BackendUser } from "../../@types";
-import { getSessionUser, validateRequired } from "../../lib/helpers";
+import { getSessionUser } from "../../lib/helpers";
 
 const handler: NextApiHandler = async (req, res) => {
   if (req.method?.toLowerCase() !== "post") {
@@ -15,16 +15,18 @@ const handler: NextApiHandler = async (req, res) => {
     res.status(403);
     return;
   }
-  if (!validateRequired(req.body.universityName)) {
-    res.status(422).json({ message: "University name is required." });
+  if (!req.body.university) {
+    res.status(422).json({ message: "University is required." });
     return;
   }
 
   user = {
     ...user,
-    favorites: user.favorites?.includes(req.body.universityName)
-      ? user.favorites.filter((fav) => fav !== req.body.universityName)
-      : [...(user.favorites || []), req.body.universityName],
+    favorites: user.favorites?.find(
+      (fav) => fav.name === req.body.university.name
+    )
+      ? user.favorites.filter((fav) => fav.name !== req.body.university.name)
+      : [...(user.favorites || []), req.body.university],
   };
 
   const usersDatabaseFilename = process.env.USERS_DATABASE_FILENAME;

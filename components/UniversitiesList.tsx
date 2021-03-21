@@ -36,7 +36,7 @@ const ListItem: FC<ListItemProps> = ({ item }) => {
   const { user, setFavorites } = useApp();
   const [status, setStatus] = useState<"idle" | "busy">("idle");
 
-  const isFavorite = user?.favorites?.includes(item.name);
+  const isFavorite = !!user?.favorites?.find((fav) => fav.name === item.name);
 
   const handleFavorite = useCallback(async () => {
     if (!user || status !== "idle") {
@@ -44,7 +44,7 @@ const ListItem: FC<ListItemProps> = ({ item }) => {
     }
     setStatus("busy");
     try {
-      const newUserData = await favorite(item.name, user.token);
+      const newUserData = await favorite(item, user.token);
       setFavorites(newUserData.favorites || []);
     } catch (error) {
       console.log("Failed to (un)favorite university");

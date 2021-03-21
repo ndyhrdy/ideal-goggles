@@ -6,7 +6,7 @@ import {
   useEffect,
   useState,
 } from "react";
-import { AuthenticatedUser } from "../@types";
+import { AuthenticatedUser, University } from "../@types";
 import { me } from "../lib/api";
 
 type Values = {
@@ -16,7 +16,7 @@ type Values = {
   login: (user: AuthenticatedUser) => void;
   logout: () => void;
   loadingUser: boolean;
-  setFavorites: (favorites: string[]) => void;
+  setFavorites: (favorites: University[]) => void;
 };
 
 const Context = createContext<Values>({
@@ -40,7 +40,7 @@ const AppContextProvider: FC = ({ children }) => {
   }, []);
 
   const handleSetFavorites = useCallback(
-    (favorites: string[]) => {
+    (favorites: University[]) => {
       if (user) {
         setUser({ ...user, favorites });
       }

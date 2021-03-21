@@ -17,6 +17,11 @@ const Navbar: FC<Props> = ({ fixed }) => {
     return [
       { to: "/", label: "Search", active: router.pathname === "/" },
       {
+        to: "/favorites",
+        label: "Favorites",
+        active: router.pathname === "/favorites",
+      },
+      {
         to: "/newsletter",
         label: "Newsletter",
         active: router.pathname === "/newsletter",

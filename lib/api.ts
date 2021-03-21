@@ -68,12 +68,12 @@ export const me = async (token: string): Promise<User> => {
 };
 
 export const favorite = async (
-  universityName: string,
+  university: University,
   token: string
 ): Promise<User> => {
   const { data: user } = await axios.post<User>(
     "/api/favorite",
-    { universityName },
+    { university },
     {
       headers: {
         Authorization: token,
