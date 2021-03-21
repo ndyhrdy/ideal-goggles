@@ -66,3 +66,19 @@ export const me = async (token: string): Promise<User> => {
   });
   return Promise.resolve(user);
 };
+
+export const favorite = async (
+  universityName: string,
+  token: string
+): Promise<User> => {
+  const { data: user } = await axios.post<User>(
+    "/api/favorite",
+    { universityName },
+    {
+      headers: {
+        Authorization: token,
+      },
+    }
+  );
+  return Promise.resolve(user);
+};

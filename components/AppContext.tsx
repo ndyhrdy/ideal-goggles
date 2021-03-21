@@ -6,16 +6,17 @@ import {
   useEffect,
   useState,
 } from "react";
-import { AuthenticatedUser, User } from "../@types";
+import { AuthenticatedUser } from "../@types";
 import { me } from "../lib/api";
 
 type Values = {
   dark: boolean;
   setDark: (dark: boolean) => void;
-  user: User | null;
+  user: AuthenticatedUser | null;
   login: (user: AuthenticatedUser) => void;
   logout: () => void;
   loadingUser: boolean;
+  setFavorites: (favorites: string[]) => void;
 };
 
 const Context = createContext<Values>({
@@ -25,17 +26,27 @@ const Context = createContext<Values>({
   login: () => {},
   logout: () => {},
   loadingUser: true,
+  setFavorites: () => {},
 });
 
 const AppContextProvider: FC = ({ children }) => {
   const [dark, setDark] = useState(false);
-  const [user, setUser] = useState<User>(null);
+  const [user, setUser] = useState<AuthenticatedUser>(null);
   const [loadingUser, setLoadingUser] = useState(true);
 
   const handleLogout = useCallback(() => {
     setUser(null);
     localStorage.removeItem("authToken");
   }, []);
+
+  const handleSetFavorites = useCallback(
+    (favorites: string[]) => {
+      if (user) {
+        setUser({ ...user, favorites });
+      }
+    },
+    [user]
+  );
 
   useEffect(() => {
     const windowMediaHandler = (ev: MediaQueryListEvent) => {
@@ -50,10 +61,10 @@ const AppContextProvider: FC = ({ children }) => {
   }, []);
 
   useEffect(() => {
-    const handleFetchMe = async () => {
+    const handleFetchMe = async (token) => {
       try {
-        const user = await me(existingToken);
-        setUser(user);
+        const fetchedUser = await me(token);
+        setUser({ ...fetchedUser, token });
       } catch (error) {
         handleLogout();
       }
@@ -61,7 +72,7 @@ const AppContextProvider: FC = ({ children }) => {
     };
     const existingToken = localStorage.getItem("authToken");
     if (existingToken) {
-      handleFetchMe();
+      handleFetchMe(existingToken);
     } else {
       setLoadingUser(false);
     }
@@ -74,11 +85,16 @@ const AppContextProvider: FC = ({ children }) => {
         setDark,
         user,
         login: (user) => {
-          setUser({ email: user.email, fullName: user.fullName });
+          setUser({
+            email: user.email,
+            fullName: user.fullName,
+            token: user.token,
+          });
           localStorage.setItem("authToken", user.token);
         },
         logout: handleLogout,
         loadingUser,
+        setFavorites: handleSetFavorites,
       }}
     >
       {children}
